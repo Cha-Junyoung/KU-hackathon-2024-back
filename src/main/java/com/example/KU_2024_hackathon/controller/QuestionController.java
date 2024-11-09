@@ -46,7 +46,7 @@ public class QuestionController {
     @GetMapping("/get-random-questions")
     @Operation(summary = "랜덤 질문 생성")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "랜덤 질문 생성 성공", content = @Content(schema = @Schema(implementation = String.class))),
+            @ApiResponse(responseCode = "200", description = "랜덤 질문 생성 성공", content = @Content(schema = @Schema(implementation = QuestionDto.Questions.class))),
             @ApiResponse(responseCode = "실패: 404 (QUESTION_NOT_FOUND)", description = "어떤 범주에 대한 질문이 존재하지 않는 경우", content = @Content(schema = @Schema(implementation = ErrorDto.class))),
     })
     public ResponseEntity<QuestionDto.Questions> getRandomQuestions() {

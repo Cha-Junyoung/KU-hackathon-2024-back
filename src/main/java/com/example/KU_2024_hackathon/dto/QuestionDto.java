@@ -47,12 +47,9 @@ public class QuestionDto {
     @Setter
     @Builder
     public static class Response {
-        @NotBlank(message = "[image_url] cannot be blank.")
         @Schema(description = "S3에 저장된 작품의 이미지 링크")
         private String imageUrl;
 
-
-        @NotBlank(message = "[text] cannot be blank.")
         @Schema(description = "답변에 대해 생성된 답변")
         private String text;
     }

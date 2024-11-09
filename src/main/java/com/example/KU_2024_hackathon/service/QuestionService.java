@@ -1,10 +1,13 @@
 package com.example.KU_2024_hackathon.service;
 
 import com.example.KU_2024_hackathon.dto.QuestionDto;
+import com.example.KU_2024_hackathon.entity.Profile;
 import com.example.KU_2024_hackathon.entity.Statistics;
 import com.example.KU_2024_hackathon.repository.StatisticsRepository;
+import com.example.KU_2024_hackathon.security.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -15,7 +18,8 @@ public class QuestionService {
     private final StatisticsRepository statisticsRepository;
     WebClient webClient = WebClient.builder().build();
 
-    public QuestionDto.Response submitAnswer(QuestionDto.Request dto) {
+    public QuestionDto.Response submitAnswer(@AuthenticationPrincipal CustomUserDetails customUserDetails,
+                                             QuestionDto.Request dto) {
         QuestionDto.Response response = webClient.post()
                 .uri("https://www.naver.com")
                 .header("Content-Type", "application/json; charset=UTF-8")
@@ -25,7 +29,11 @@ public class QuestionService {
                 .retrieve()
                 .bodyToMono(QuestionDto.Response.class)
                 .block();
+
+        Profile profile = customUserDetails.getProfile();
+
         Statistics statistics = Statistics.builder()
+                .profile(profile)
                 .question_1(dto.getQuestion1())
                 .question_2(dto.getQuestion2())
                 .question_3(dto.getQuestion3())

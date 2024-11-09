@@ -1,6 +1,7 @@
 package com.example.KU_2024_hackathon.controller;
 
 import com.example.KU_2024_hackathon.dto.StatisticsDto;
+import com.example.KU_2024_hackathon.security.CustomUserDetails;
 import com.example.KU_2024_hackathon.service.StatisticsService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -12,6 +13,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -31,9 +33,10 @@ public class StatisticsController {
             @ApiResponse(responseCode = "200", description = "감정 통계 조회 성공", content = @Content(schema = @Schema(implementation = String.class))),
     })
     public ResponseEntity<StatisticsDto.GetColorsResponse> getColorsPerMonth(
+            @AuthenticationPrincipal CustomUserDetails customUserDetails,
             @Valid @RequestParam StatisticsDto.GetColorsRequest request) {
 
         return ResponseEntity.status(HttpStatus.OK)
-                .body(statisticsService.getColorsPerMonth(request));
+                .body(statisticsService.getColorsPerMonth(customUserDetails, request));
     }
 }

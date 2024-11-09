@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Tag(name = "질문", description = "질문 관련 api입니다.")
 public class QuestionController {
 
-    private final QuestionService questionServce;
+    private final QuestionService questionService;
 
     @PostMapping()
     @Operation(summary = "질문 답변 제출")
@@ -37,6 +37,6 @@ public class QuestionController {
             @Valid @RequestBody QuestionDto.Request request) {
 
         return ResponseEntity.status(HttpStatus.OK)
-                .body(questionServce.submitAnswer(customUserDetails, request));
+                .body(questionService.submitAnswer(customUserDetails, request));
     }
 }

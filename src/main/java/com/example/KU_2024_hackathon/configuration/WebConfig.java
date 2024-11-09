@@ -19,7 +19,8 @@ public class WebConfig implements WebMvcConfigurer
                 .allowCredentials(true)
                 .allowedOrigins(
                         "https://localhost:3000",
-                        "http://localhost:3000"
+                        "http://localhost:3000",
+                        "https://2f37-163-152-3-134.ngrok-free.app"
                 )   // CORS 허용 도메인
                 .allowedMethods("GET", "POST", "PUT", "DELETE"); // CORS 허용 메서드
     }

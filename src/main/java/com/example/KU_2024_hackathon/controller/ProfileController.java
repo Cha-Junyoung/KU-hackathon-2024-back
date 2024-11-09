@@ -43,7 +43,7 @@ public class ProfileController
                 .body("회원가입을 성공하였습니다.");
     }
 
-    /* 감정 색상 수정 컨트롤러
+    /* 감정 색상 수정 컨트롤러 */
     @PostMapping("/update-color")
     @Operation(summary = "감정 색상 수정")
     @ApiResponses(value = {
@@ -57,6 +57,4 @@ public class ProfileController
         return ResponseEntity.status(HttpStatus.OK)
                 .body("감정 색상 수정을 성공하였습니다.");
     }
-
-     */
 }

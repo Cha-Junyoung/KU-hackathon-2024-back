@@ -51,5 +51,4 @@ public class Profile
     @Column(nullable = false)
     @Builder.Default
     private String boring = "b649ba";
-
 }

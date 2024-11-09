@@ -44,7 +44,7 @@ public class ProfileService
         profileRepository.save(profile);
     }
 
-    /* 감정 색상 수정 서비스
+    /* 감정 색상 수정 서비스 */
     @Transactional
     public void updateColor(Principal principal, ProfileDto.UpdateColor dto)
     {
@@ -55,6 +55,7 @@ public class ProfileService
         Profile profile = profileRepository.findByEmail(email)
                 .orElseThrow(() -> new CustomException(CustomErrorCode.EMAIL_NOT_FOUND, email));
 
+        // 색상 코드가 전부 6자리인지 확인
         if(
             dto.getJoy().length() != 6 ||
             dto.getAngry().length() != 6 ||
@@ -65,9 +66,20 @@ public class ProfileService
             dto.getInterest().length() != 6 ||
             dto.getBoring().length() != 6
         ) {
-
+            throw new CustomException(CustomErrorCode.INVALID_COLOR_CODE, null);
         }
+
+        // 색상 정보 수정
         profile.setJoy(dto.getJoy());
+        profile.setAngry(dto.getAngry());
+        profile.setSad(dto.getSad());
+        profile.setAfraid(dto.getAfraid());
+        profile.setAdmiration(dto.getAdmiration());
+        profile.setSurprise(dto.getSurprise());
+        profile.setInterest(dto.getInterest());
+        profile.setBoring(dto.getBoring());
+
+        // 데이터베이스 반영
+        profileRepository.save(profile);
     }
-    */
 }

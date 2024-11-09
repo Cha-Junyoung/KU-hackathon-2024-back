@@ -9,7 +9,9 @@ import com.example.KU_2024_hackathon.exception.CustomException;
 import com.example.KU_2024_hackathon.repository.QuestionRepository;
 import com.example.KU_2024_hackathon.repository.StatisticsRepository;
 import com.example.KU_2024_hackathon.security.CustomUserDetails;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,6 +32,24 @@ public class QuestionService {
     /* 질문 답변 제출 서비스 */
     public QuestionDto.Response submitAnswer(@AuthenticationPrincipal CustomUserDetails customUserDetails,
                                              QuestionDto.Request dto) {
+
+        // 현재 날짜와 시간
+        LocalDateTime now = LocalDateTime.now();
+
+        // 연도, 월, 일 추출
+        int year = now.getYear();
+        int month = now.getMonthValue();
+        int day = now.getDayOfMonth();
+
+        // 하루에 하나만 제출할 수 있도록 체크
+        Optional<Statistics> statisticsByUserIdAndYearAndMonthAndDay = statisticsRepository.findStatisticsByUserIdAndYearAndMonthAndDay(
+                customUserDetails.getProfile()
+                        .getId(), year, month, day);
+
+        if (statisticsByUserIdAndYearAndMonthAndDay.isPresent()) {
+            throw new CustomException(CustomErrorCode.ALREADY_SUBMISSION_EXIST, null);
+        }
+
         // AI 서버로 이미지 생성 요청 후 응답 받기
         QuestionDto.Response response = webClient.post()
                 .uri("https://port-0-ku-hackathon-2024-ai-m31g5tm815010438.sel4.cloudtype.app/api/create")

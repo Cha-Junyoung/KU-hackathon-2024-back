@@ -16,13 +16,13 @@ public class ProfileDto
     @Builder
     public static class Profile
     {
-        @NotNull(message = "[profile_id] cannot be null.")
-        @Schema(description = "profile_id")
-        private Long profile_id;
+        @NotNull(message = "[id] cannot be null.")
+        @Schema(description = "id")
+        private Long id;
 
-        @NotBlank(message = "[id] cannot be blank.")
-        @Schema(description = "아이디")
-        private String id;
+        @NotBlank(message = "[email] cannot be blank.")
+        @Schema(description = "이메일")
+        private String email;
 
         @NotBlank(message = "[password] cannot be blank.")
         @Schema(description = "비밀번호")
@@ -48,9 +48,9 @@ public class ProfileDto
     @Builder
     public static class Join
     {
-        @NotBlank(message = "[id] cannot be blank.")
-        @Schema(description = "아이디")
-        private String id;
+        @NotBlank(message = "[email] cannot be blank.")
+        @Schema(description = "이메일")
+        private String email;
 
         @NotBlank(message = "[password] cannot be blank.")
         @Schema(description = "비밀번호")

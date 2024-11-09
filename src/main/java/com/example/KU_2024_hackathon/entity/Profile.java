@@ -18,9 +18,9 @@ public class Profile
 {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long profile_id;
+    private Long id;
 
-    @Column(nullable = false, length = 50) private String id;
+    @Column(nullable = false, length = 50) private String email;
     @Column(nullable = false, length = 255) private String password;
     @Column(nullable = false, length = 50) private String nickname;
     @Column(nullable = false, length = 50) private LocalDateTime created_at;

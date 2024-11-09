@@ -23,14 +23,14 @@ public class ProfileService
     public void join(ProfileDto.Join dto)
     {
         // 해당 아이디로 생성된 계정이 이미 존재한다면 예외 처리
-        profileRepository.findById(dto.getId())
+        profileRepository.findByEmail(dto.getEmail())
                 .ifPresent(user -> {
-                    throw new CustomException(CustomErrorCode.ALREADY_USED_ID, dto.getId());
+                    throw new CustomException(CustomErrorCode.ALREADY_USED_ID, dto.getEmail());
                 });
 
         // Profile 엔티티 생성
         Profile profile = Profile.builder()
-                .id(dto.getId())
+                .email(dto.getEmail())
                 .password(encoder.encode(dto.getPassword()))
                 .nickname(dto.getNickname())
                 .created_at(LocalDateTime.now())

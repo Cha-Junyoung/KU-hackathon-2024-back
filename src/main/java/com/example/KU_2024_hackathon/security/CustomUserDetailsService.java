@@ -17,14 +17,14 @@ public class CustomUserDetailsService implements UserDetailsService
     private ProfileRepository profileRepository;
 
     @Override
-    public UserDetails loadUserByUsername(String id) throws UsernameNotFoundException
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException
     {
         // 데이터베이스에서 해당 아이디의 계정 검색
-        Optional<Profile> profile = profileRepository.findById(id);
+        Optional<Profile> profile = profileRepository.findByEmail(email);
 
         // 해당 아이디의 계정이 없으면, 예외 처리
         if (profile.isEmpty())
-            throw new UsernameNotFoundException(id);
+            throw new UsernameNotFoundException(email);
 
         // 해당 아이디의 계정이 존재하면, 해당 계정으로 만들어진 CustomUserDetails 반환
         return new CustomUserDetails(profile.get());

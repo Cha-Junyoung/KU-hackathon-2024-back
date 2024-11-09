@@ -59,7 +59,7 @@ public class SecurityConfig
         // 로그인, 로그아웃 설정
         httpSecurity
                 .formLogin((login) -> login
-                        .usernameParameter("id")                        // 아이디
+                        .usernameParameter("email")                     // 아이디
                         .passwordParameter("password")                  // 비밀번호
                         .loginProcessingUrl("/api/login")               // 로그인 처리 경로
                         .permitAll()

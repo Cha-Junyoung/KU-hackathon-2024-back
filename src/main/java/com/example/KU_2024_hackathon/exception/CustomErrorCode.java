@@ -14,7 +14,8 @@ public enum CustomErrorCode {
     LOGIN_FAILURE(HttpStatus.FORBIDDEN, "로그인에 실패하였습니다."),
     STATISTICS_NOT_FOUND(HttpStatus.NOT_FOUND, "통계 정보를 찾을 수 없습니다."),
     EMOTION_NOT_FOUND(HttpStatus.NOT_FOUND, "감정 정보를 찾을 수 없습니다."),
-    ALREADY_SUBMISSION_EXIST(HttpStatus.CONFLICT, "이미 오늘 질문에 대해 제출을 완료 했습니다.");
+    ALREADY_SUBMISSION_EXIST(HttpStatus.CONFLICT, "이미 오늘 질문에 대해 제출을 완료 했습니다."),
+    STATISTICS_NOT_PUBLIC(HttpStatus.UNAUTHORIZED, "해당 통계 정보는 비공개입니다.");
 
     private final HttpStatus httpStatus;
     private final String message;

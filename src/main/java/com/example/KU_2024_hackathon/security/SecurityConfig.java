@@ -55,6 +55,9 @@ public class SecurityConfig
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
                         // QUESTION
                         .requestMatchers("/api/question/**").hasAnyRole("ADMIN", "USER")
+                        // 공유
+                        .requestMatchers("/api/share").hasAnyRole("ADMIN", "USER")
+                        .requestMatchers("/api/share/view").permitAll()
                         // 기타
                         .requestMatchers("/").permitAll()
                         .requestMatchers("/swagger-ui/**").permitAll()

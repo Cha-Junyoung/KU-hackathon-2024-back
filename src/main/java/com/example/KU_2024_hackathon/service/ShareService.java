@@ -42,4 +42,26 @@ public class ShareService
                 .statistics_key(statistics.getId())
                 .build();
     }
+
+    /* 공유당하기 서비스 */
+    public ShareDto.View view(Long id)
+    {
+        Optional<Statistics> statistics_optional = statisticsRepository.findById(id);
+
+        if(statistics_optional.isEmpty())
+            throw new CustomException(CustomErrorCode.STATISTICS_NOT_FOUND, null);
+
+        Statistics statistics = statistics_optional.get();
+
+        if(!statistics.is_public()) {
+            throw new CustomException(CustomErrorCode.STATISTICS_NOT_PUBLIC, id);
+        }
+
+        return ShareDto.View.builder()
+                .created_at(statistics.getCreatedAt())
+                .image(statistics.getImage())
+                .text(statistics.getText())
+                .emotion(String.valueOf(statistics.getEmotion()))
+                .build();
+    }
 }

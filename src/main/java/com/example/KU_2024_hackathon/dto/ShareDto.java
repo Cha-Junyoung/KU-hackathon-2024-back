@@ -6,6 +6,8 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 public class ShareDto
 {
     @AllArgsConstructor
@@ -39,6 +41,30 @@ public class ShareDto
         @NotBlank(message = "[statistics_key] cannot be blank.")
         @Schema(description = "statistics_key")
         private Long statistics_key;
+    }
+
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Getter
+    @Setter
+    @Builder
+    public static class View
+    {
+        @NotBlank(message = "[created_at] cannot be blank.")
+        @Schema(description = "created_at")
+        private LocalDateTime created_at;
+
+        @NotBlank(message = "[image] cannot be blank.")
+        @Schema(description = "image")
+        private String image;
+
+        @NotBlank(message = "[text] cannot be blank.")
+        @Schema(description = "text")
+        private String text;
+
+        @NotBlank(message = "[emotion] cannot be blank.")
+        @Schema(description = "emotion")
+        private String emotion;
 
     }
 }

@@ -9,6 +9,8 @@ import org.springframework.data.repository.query.Param;
 
 public interface StatisticsRepository extends JpaRepository<Statistics, Long> {
 
+    Optional<Statistics> findById(Long id);
+
     @Query(value = "SELECT * FROM statistics WHERE profile = :profile AND YEAR(created_at) = :year AND MONTH(created_at) = :month", nativeQuery = true)
     List<Statistics> findByProfileAndYearAndMonth(@Param("profile") Long id, @Param("year") int year,
                                                   @Param("month") int month);

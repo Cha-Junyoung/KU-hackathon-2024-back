@@ -33,4 +33,39 @@ public class StatisticsDto {
         @Schema(description = "특정 월의 색깔 리스트")
         private String[] colors;
     }
+
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Getter
+    @Setter
+    @Builder
+    public static class GetStatisticsRequest {
+        @NotBlank(message = "[year] cannot be blank.")
+        @Schema(description = "연도")
+        private String year;
+
+        @NotBlank(message = "[month] cannot be blank.")
+        @Schema(description = "월")
+        private String month;
+
+        @NotBlank(message = "[day] cannot be blank.")
+        @Schema(description = "일")
+        private String day;
+    }
+
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Getter
+    @Setter
+    @Builder
+    public static class GetStatisticsResponse {
+        @Schema(description = "이미지 링크")
+        private String imageUrl;
+
+        @Schema(description = "텍스트")
+        private String text;
+
+    }
+
+
 }

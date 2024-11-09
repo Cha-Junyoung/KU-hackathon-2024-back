@@ -27,6 +27,18 @@ public class StatisticsController {
 
     private final StatisticsService statisticsService;
 
+    @GetMapping("/day")
+    @Operation(summary = "특정 요일 이미지와 텍스트 확인하기")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "특정 요일 통계 조회 성공", content = @Content(schema = @Schema(implementation = String.class))),
+    })
+    public ResponseEntity<StatisticsDto.GetStatisticsResponse> getStatisticsPerDay(
+            @AuthenticationPrincipal CustomUserDetails customUserDetails,
+            @Valid @RequestParam StatisticsDto.GetStatisticsRequest request) {
+        return ResponseEntity.status(HttpStatus.OK).body(
+                statisticsService.getStatisticsPerDay(customUserDetails, request));
+    }
+
     @GetMapping()
     @Operation(summary = "나의 특정 달 감정 통계 확인하기")
     @ApiResponses(value = {

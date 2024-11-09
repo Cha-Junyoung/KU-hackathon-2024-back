@@ -16,12 +16,12 @@ public class StatisticsService {
     public StatisticsDto.GetColorsResponse getColorsPerMonth(CustomUserDetails customUserDetails,
                                                              StatisticsDto.GetColorsRequest request) {
         Profile profile = customUserDetails.getProfile();
-        String year = request.getYear();
-        String month = request.getMonth();
+        int year = Integer.parseInt(request.getYear());
+        int month = Integer.parseInt(request.getMonth());
 
         List<String> emotionsByUserIdAndYearAndMonth = statisticsRepository.findEmotionsByUserIdAndYearAndMonth(
-                profile.getId(), Integer.parseInt(year),
-                Integer.parseInt(month));
+                profile.getId(), year,
+                month);
 
         // List<String>을 String[] 배열로 변환
         String[] colorsArray = emotionsByUserIdAndYearAndMonth.toArray(new String[0]);
@@ -30,5 +30,15 @@ public class StatisticsService {
         return StatisticsDto.GetColorsResponse.builder()
                 .colors(colorsArray)
                 .build();
+    }
+
+    public StatisticsDto.GetStatisticsResponse getStatisticsPerDay(CustomUserDetails customUserDetails,
+                                                                   StatisticsDto.GetStatisticsRequest request) {
+        Profile profile = customUserDetails.getProfile();
+        int year = Integer.parseInt(request.getYear());
+        int month = Integer.parseInt(request.getMonth());
+        int day = Integer.parseInt(request.getDay());
+
+        return statisticsRepository.findStatisticsByUserIdAndYearAndMonth(profile.getId(), year, month, day);
     }
 }

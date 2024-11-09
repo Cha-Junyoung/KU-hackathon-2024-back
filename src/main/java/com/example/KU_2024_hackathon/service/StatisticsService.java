@@ -4,15 +4,20 @@ import com.example.KU_2024_hackathon.dto.StatisticsDto;
 import com.example.KU_2024_hackathon.dto.StatisticsDto.GetColorsResponse;
 import com.example.KU_2024_hackathon.dto.StatisticsDto.GetStatisticsInfoResponse;
 import com.example.KU_2024_hackathon.entity.Profile;
+import com.example.KU_2024_hackathon.entity.Statistics;
+import com.example.KU_2024_hackathon.exception.CustomErrorCode;
+import com.example.KU_2024_hackathon.exception.CustomException;
 import com.example.KU_2024_hackathon.repository.StatisticsRepository;
 import com.example.KU_2024_hackathon.security.CustomUserDetails;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class StatisticsService {
     private final StatisticsRepository statisticsRepository;
@@ -23,22 +28,25 @@ public class StatisticsService {
         int specificYear = Integer.parseInt(year);
         int specificMonth = Integer.parseInt(month);
 
-        List<Object[]> results = statisticsRepository.findEmotionsByUserIdAndYearAndMonth(
-                profile.getId(), specificYear,
-                specificMonth);
+        List<Statistics> results = statisticsRepository.findByProfileAndYearAndMonth(profile.getId(), specificYear, specificMonth);
 
-        return results.stream()
-                .map(result -> GetStatisticsInfoResponse.builder()
-                        .time((LocalDateTime) result[0])
-                        .color((String) result[1])
-                        .emotion((String) result[2])
-                        .build())
-                .collect(Collectors.groupingBy(GetStatisticsInfoResponse::getTime))
-                .values().stream()
-                .map(statistics -> GetColorsResponse.builder()
-                        .colors(statistics.toArray(new GetStatisticsInfoResponse[0]))
-                        .build())
-                .toList();
+        // 해당 요청자의 해당 달의 통계 정보가 없다면 예외 처리
+        if(results.isEmpty())
+            throw new CustomException(CustomErrorCode.STATISTICS_NOT_FOUND, null);
+
+        String joyColor = results.getFirst().getProfile().getJoy();
+        String angryColor = results.getFirst().getProfile().getAngry();
+        String sadColor = results.getFirst().getProfile().getSad();
+        String afraidColor = results.getFirst().getProfile().getAfraid();
+        String admirationColor = results.getFirst().getProfile().getAdmiration();
+        String surpriseColor = results.getFirst().getProfile().getSurprise();
+        String interestColor = results.getFirst().getProfile().getInterest();
+        String boringColor = results.getFirst().getProfile().getBoring();
+        LocalDateTime createdAt = results.getFirst().getCreatedAt();
+
+
+
+        return null;
     }
 
     public StatisticsDto.GetStatisticsResponse getStatisticsPerDay(CustomUserDetails customUserDetails,

@@ -12,12 +12,14 @@ import com.example.KU_2024_hackathon.security.CustomUserDetails;
 import java.util.List;
 import java.util.Random;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class QuestionService {
 
@@ -40,6 +42,8 @@ public class QuestionService {
 
         // 요청을 보낸 사용자 엔티티
         Profile profile = customUserDetails.getProfile();
+
+        log.info(profile.toString());
         
         // 결과 저장
         Statistics statistics = Statistics.builder()

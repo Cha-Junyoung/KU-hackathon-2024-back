@@ -37,7 +37,9 @@ public class StatisticsService {
 
         // 통계 정보가 없으면 예외 처리
         if (statistics.isEmpty()) {
-            throw new CustomException(CustomErrorCode.STATISTICS_NOT_FOUND, null);
+            return GetColorsResponse.builder()
+                    .colors(result)
+                    .build();
         }
 
         // 프로필에서 색상 정보를 미리 가져오기

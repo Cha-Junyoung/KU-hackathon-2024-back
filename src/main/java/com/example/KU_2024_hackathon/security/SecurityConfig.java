@@ -28,8 +28,7 @@ public class SecurityConfig {
         // 기본 설정
         httpSecurity
                 .httpBasic(HttpBasicConfigurer::disable)    // HTTP 기본 인증 비활성화
-                .csrf(CsrfConfigurer::disable)              // CSRF 보호 비활성화
-                .cors(cors -> cors.configurationSource(corsConfigurationSource())); // CORS 설정 추가
+                .csrf(CsrfConfigurer::disable);             // CSRF 보호 비활성화
 
         // 경로별 권한 설정
         httpSecurity
@@ -149,7 +148,7 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("http://localhost:3000", "https://2f37-163-152-3-134.ngrok-free.app")); // 허용할 출처 설정
+        configuration.setAllowedOrigins(List.of("http://localhost:3000", "https://c969-163-152-3-141.ngrok-free.app")); // 허용할 출처 설정
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE"));
         configuration.setAllowedHeaders(List.of("*")); // 모든 헤더 허용
         configuration.setAllowCredentials(true); // 자격 증명 허용 (필요 시)

@@ -27,20 +27,23 @@ public class QuestionService {
     private final QuestionRepository questionRepository;
     WebClient webClient = WebClient.builder().build();
 
+    /* 질문 답변 제출 서비스 */
     public QuestionDto.Response submitAnswer(@AuthenticationPrincipal CustomUserDetails customUserDetails,
                                              QuestionDto.Request dto) {
+        // AI 서버로 이미지 생성 요청 후 응답 받기
         QuestionDto.Response response = webClient.post()
-                .uri("https://www.naver.com")
+                .uri("https://port-0-ku-hackathon-2024-ai-m31g5tm815010438.sel4.cloudtype.app/api/create")
                 .header("Content-Type", "application/json; charset=UTF-8")
-//                .header("Referer", "https://sugang.korea.ac.kr/graduate/core?attribute=coreMain&flagx=X&fake=1712483556643")
                 .accept(MediaType.APPLICATION_JSON)
                 .bodyValue(dto)
                 .retrieve()
                 .bodyToMono(QuestionDto.Response.class)
                 .block();
 
+        // 요청을 보낸 사용자 엔티티
         Profile profile = customUserDetails.getProfile();
 
+        // 결과 저장
         Statistics statistics = Statistics.builder()
                 .question_1(questionRepository.findByQuestion(dto.getQuestion1()).getNumber())
                 .question_2(questionRepository.findByQuestion(dto.getQuestion2()).getNumber())

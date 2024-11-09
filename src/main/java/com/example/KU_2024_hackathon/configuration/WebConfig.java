@@ -17,7 +17,10 @@ public class WebConfig implements WebMvcConfigurer
                 .addMapping("/**")
                 .allowedHeaders("*")
                 .allowCredentials(true)
-                .allowedOriginPatterns("*")   // CORS 허용 도메인
+                .allowedOrigins(
+                        "https://localhost:3000",
+                        "http://localhost:3000"
+                )   // CORS 허용 도메인
                 .allowedMethods("GET", "POST", "PUT", "DELETE"); // CORS 허용 메서드
     }
 }

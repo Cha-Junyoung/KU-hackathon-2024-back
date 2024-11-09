@@ -12,7 +12,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import org.hibernate.annotations.ColumnDefault;
 
 @Entity
 @AllArgsConstructor
@@ -38,26 +37,26 @@ public class Profile extends Common {
 
     @Column(nullable = false)
     @Builder.Default
-    private String joy = "fccf03";
+    private String joy = "6cff03";
     @Column(nullable = false)
     @Builder.Default
-    private String angry = "fc0303";
+    private String angry = "ed0505";
     @Column(nullable = false)
     @Builder.Default
-    private String sad = "0330fc";
+    private String sad = "ed6605";
     @Column(nullable = false)
     @Builder.Default
-    private String afraid = "035711";
+    private String afraid = "ed9805";
     @Column(nullable = false)
     @Builder.Default
-    private String admiration = "6df754";
+    private String admiration = "1cff03";
     @Column(nullable = false)
     @Builder.Default
-    private String surprise = "57a8e6";
+    private String surprise = "9eff03";
     @Column(nullable = false)
     @Builder.Default
-    private String interest = "ffa114";
+    private String interest = "ddff03";
     @Column(nullable = false)
     @Builder.Default
-    private String boring = "b649ba";
+    private String boring = "edbb05";
 }

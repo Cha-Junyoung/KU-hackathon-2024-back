@@ -16,12 +16,10 @@ import org.springframework.security.web.session.HttpSessionEventPublisher;
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfig
-{
+public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity,
-                                                   CustomUserDetailsService customUserDetailsService) throws Exception
-    {
+                                                   CustomUserDetailsService customUserDetailsService) throws Exception {
         // 기본 설정
         httpSecurity
                 .httpBasic(HttpBasicConfigurer::disable)    // HTTP 기본 인증 비활성화
@@ -41,6 +39,8 @@ public class SecurityConfig
                         .requestMatchers("/api/profile/test-admin").hasRole("ADMIN")
                         // ADMIN
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
+                        // QUESTION
+                        .requestMatchers("/api/question/**").hasAnyRole("ADMIN", "USER")
                         // 기타
                         .requestMatchers("/").permitAll()
                         .requestMatchers("/swagger-ui/**").permitAll()
@@ -70,8 +70,9 @@ public class SecurityConfig
                         .logoutUrl("/api/logout")               // 로그아웃 처리 경로
                         .addLogoutHandler((request, response, authentication) -> {
                             HttpSession session = request.getSession();
-                            if (session != null)
+                            if (session != null) {
                                 session.invalidate();
+                            }
                         })
                         .logoutSuccessHandler(customLogoutSuccessHandler())
                         .deleteCookies("remember-me")
@@ -121,7 +122,8 @@ public class SecurityConfig
         return new CustomAuthenticationEntryPoint();
     }
 
-    @Bean CustomAccessDeniedHandler customAccessDeniedHandler() {
+    @Bean
+    CustomAccessDeniedHandler customAccessDeniedHandler() {
         return new CustomAccessDeniedHandler();
     }
 

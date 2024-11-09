@@ -1,7 +1,9 @@
 package com.example.KU_2024_hackathon.service;
 
+import com.example.KU_2024_hackathon.dto.Emotions;
 import com.example.KU_2024_hackathon.dto.QuestionDto;
 import com.example.KU_2024_hackathon.entity.Statistics;
+import com.example.KU_2024_hackathon.repository.QuestionRepository;
 import com.example.KU_2024_hackathon.repository.StatisticsRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
@@ -13,6 +15,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 public class QuestionService {
 
     private final StatisticsRepository statisticsRepository;
+    private final QuestionRepository questionRepository;
     WebClient webClient = WebClient.builder().build();
 
     public QuestionDto.Response submitAnswer(QuestionDto.Request dto) {
@@ -25,19 +28,29 @@ public class QuestionService {
                 .retrieve()
                 .bodyToMono(QuestionDto.Response.class)
                 .block();
+
         Statistics statistics = Statistics.builder()
-                .question_1(dto.getQuestion1())
-                .question_2(dto.getQuestion2())
-                .question_3(dto.getQuestion3())
+                .question_1(questionRepository.findByQuestion(dto.getQuestion1()).getNumber())
+                .question_2(questionRepository.findByQuestion(dto.getQuestion2()).getNumber())
+                .question_3(questionRepository.findByQuestion(dto.getQuestion3()).getNumber())
                 .answer_1(dto.getAnswer1())
                 .answer_2(dto.getAnswer2())
                 .answer_3(dto.getAnswer3())
                 .text(response.getText())
                 .image_link(response.getImageUrl())
+                .emotion(Emotions.valueOf(response.getEmotion()))
                 .build();
 
         statisticsRepository.save(statistics);
 
         return response;
     }
+
+    /* 랜덤 질문 생성 서비스
+    public QuestionDto.Questions getRandomQuestions()
+    {
+
+
+        return null;
+    }*/
 }

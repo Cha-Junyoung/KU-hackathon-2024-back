@@ -12,10 +12,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/question")
@@ -23,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Tag(name = "질문", description = "질문 관련 api입니다.")
 public class QuestionController {
 
-    private final QuestionService questionServce;
+    private final QuestionService questionService;
 
     @PostMapping()
     @Operation(summary = "질문 답변 제출")
@@ -33,6 +30,18 @@ public class QuestionController {
     public ResponseEntity<QuestionDto.Response> submitAnswer(@Valid @RequestBody QuestionDto.Request request) {
 
         return ResponseEntity.status(HttpStatus.OK)
-                .body(questionServce.submitAnswer(request));
+                .body(questionService.submitAnswer(request));
     }
+
+    /* 랜덤 질문 생성 컨트롤러
+    @GetMapping("/get-random-questions")
+    @Operation(summary = "랜덤 질문 생성")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "랜덤 질문 생성 성공", content = @Content(schema = @Schema(implementation = String.class))),
+    })
+    public ResponseEntity<QuestionDto.Questions> getRandomQuestions()
+    {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(questionService.getRandomQuestions());
+    }*/
 }

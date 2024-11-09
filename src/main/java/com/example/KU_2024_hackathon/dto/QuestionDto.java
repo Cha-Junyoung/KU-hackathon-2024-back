@@ -51,9 +51,31 @@ public class QuestionDto {
         @Schema(description = "S3에 저장된 작품의 이미지 링크")
         private String imageUrl;
 
-
         @NotBlank(message = "[text] cannot be blank.")
         @Schema(description = "답변에 대해 생성된 답변")
         private String text;
+
+        @NotBlank(message = "[emotion] cannot be blank.")
+        @Schema(description = "답변에 대해 생성된 감정")
+        private String emotion;
+    }
+
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Getter
+    @Setter
+    @Builder
+    public static class Questions {
+        @NotBlank(message = "[question1] cannot be blank.")
+        @Schema(description = "첫번째 질문")
+        private String question1;
+
+        @NotBlank(message = "[question2] cannot be blank.")
+        @Schema(description = "두번째 질문")
+        private String question2;
+
+        @NotBlank(message = "[question3] cannot be blank.")
+        @Schema(description = "세번째 질문")
+        private String question3;
     }
 }

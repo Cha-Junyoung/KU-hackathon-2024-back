@@ -1,5 +1,6 @@
 package com.example.KU_2024_hackathon.entity;
 
+import com.example.KU_2024_hackathon.dto.Emotions;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -41,16 +42,18 @@ public class Statistics extends Common {
     private String text;
     @Column(nullable = false)
     private String image_link;
-    @Column(columnDefinition = "TEXT", nullable = false)
-    private String question_1;
-    @Column(columnDefinition = "TEXT", nullable = false)
-    private String question_2;
-    @Column(columnDefinition = "TEXT", nullable = false)
-    private String question_3;
+    @Column(nullable = false)
+    private int question_1;
+    @Column(nullable = false)
+    private int question_2;
+    @Column(nullable = false)
+    private int question_3;
     @Column(columnDefinition = "TEXT", nullable = false)
     private String answer_1;
     @Column(columnDefinition = "TEXT", nullable = false)
     private String answer_2;
     @Column(columnDefinition = "TEXT", nullable = false)
     private String answer_3;
+    @Column(nullable = false)
+    private Emotions emotion;
 }

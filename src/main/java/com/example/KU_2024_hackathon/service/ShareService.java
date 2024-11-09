@@ -25,7 +25,7 @@ public class ShareService
     private final StatisticsRepository statisticsRepository;
 
     /* 공유하기 버튼 서비스 */
-    public ShareDto.Response share(CustomUserDetails customUserDetails, ShareDto.Request request)
+    public ShareDto.ShareResponse share(CustomUserDetails customUserDetails, ShareDto.ShareRequest request)
     {
         Profile profile = customUserDetails.getProfile();
 
@@ -38,7 +38,7 @@ public class ShareService
         statistics.set_public(true);
         statisticsRepository.save(statistics);
 
-        return ShareDto.Response.builder()
+        return ShareDto.ShareResponse.builder()
                 .statistics_key(statistics.getId())
                 .build();
     }

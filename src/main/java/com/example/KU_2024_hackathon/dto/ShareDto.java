@@ -15,7 +15,7 @@ public class ShareDto
     @Getter
     @Setter
     @Builder
-    public static class Request
+    public static class ShareRequest
     {
         @NotBlank(message = "[year] cannot be blank.")
         @Schema(description = "year")
@@ -36,7 +36,7 @@ public class ShareDto
     @Getter
     @Setter
     @Builder
-    public static class Response
+    public static class ShareResponse
     {
         @NotBlank(message = "[statistics_key] cannot be blank.")
         @Schema(description = "statistics_key")

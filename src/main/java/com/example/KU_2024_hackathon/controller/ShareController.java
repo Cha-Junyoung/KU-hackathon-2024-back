@@ -31,11 +31,11 @@ public class ShareController
     @PostMapping()
     @Operation(summary = "공유하기 버튼")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "공유하기 버튼 성공", content = @Content(schema = @Schema(implementation = ShareDto.Response.class))),
+            @ApiResponse(responseCode = "200", description = "공유하기 버튼 성공", content = @Content(schema = @Schema(implementation = ShareDto.ShareResponse.class))),
     })
-    public ResponseEntity<ShareDto.Response> share(
+    public ResponseEntity<ShareDto.ShareResponse> share(
             @AuthenticationPrincipal CustomUserDetails customUserDetails,
-            @Valid @RequestBody ShareDto.Request request) {
+            @Valid @RequestBody ShareDto.ShareRequest request) {
 
         return ResponseEntity.status(HttpStatus.OK)
                 .body(shareService.share(customUserDetails, request));

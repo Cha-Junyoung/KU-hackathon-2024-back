@@ -25,7 +25,7 @@ public class QuestionController {
 
     private final QuestionService questionServce;
 
-    @PostMapping("/")
+    @PostMapping()
     @Operation(summary = "질문 답변 제출")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "질문 답변 제출 성공", content = @Content(schema = @Schema(implementation = String.class))),

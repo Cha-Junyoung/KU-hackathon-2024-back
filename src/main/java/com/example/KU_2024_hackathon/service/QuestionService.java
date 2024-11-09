@@ -18,7 +18,7 @@ public class QuestionService {
     public QuestionDto.Response submitAnswer(QuestionDto.Request dto) {
         QuestionDto.Response response = webClient.post()
                 .uri("https://www.naver.com")
-                .header("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8")
+                .header("Content-Type", "application/json; charset=UTF-8")
 //                .header("Referer", "https://sugang.korea.ac.kr/graduate/core?attribute=coreMain&flagx=X&fake=1712483556643")
                 .accept(MediaType.APPLICATION_JSON)
                 .bodyValue(dto)

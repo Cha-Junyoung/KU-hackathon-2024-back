@@ -49,7 +49,7 @@ public class StatisticsController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "감정 통계 조회 성공", content = @Content(schema = @Schema(implementation = GetColorsResponse.class))),
     })
-    public ResponseEntity<List<StatisticsDto.GetColorsResponse>> getColorsPerMonth(
+    public ResponseEntity<StatisticsDto.GetColorsResponse> getColorsPerMonth(
             @AuthenticationPrincipal CustomUserDetails customUserDetails,
             @Valid @RequestParam String year,
             @Valid @RequestParam String month) {

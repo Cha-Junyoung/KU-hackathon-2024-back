@@ -1,0 +1,12 @@
+spring:
+  ## 데이터베이스(MySQL) 연동
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${DB_url}:${DB_port}/${DB_dataBaseName}?useSSL=false&useUnicode=true&allowPublicKeyRetrieval=true
+    username: ${DB_name}
+    password: ${DB_password}
+  jpa:
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQLDialect
+    hibernate:
+      ddl-auto: update

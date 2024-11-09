@@ -3,6 +3,7 @@ package com.example.KU_2024_hackathon.dto;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
+import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -31,8 +32,25 @@ public class StatisticsDto {
     @Setter
     @Builder
     public static class GetColorsResponse {
-        @ArraySchema(arraySchema = @Schema(description = "특정 월의 색깔 리스트", example = "[\"red\", \"blue\", \"green\"]"))
-        private String[] colors;
+        @ArraySchema(arraySchema = @Schema(description = "특정 월의 날짜, 색깔, 감정 정보", example = "[\"red\", \"blue\", \"green\"]"))
+        private GetStatisticsInfoResponse[] colors;
+    }
+
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Getter
+    @Setter
+    @Builder
+    @Schema(description = "통계 정보")
+    public static class GetStatisticsInfoResponse {
+        @Schema(description = "날짜와 시간", example = "2024-11-09T21:37:00")
+        private LocalDateTime time;
+
+        @Schema(description = "색깔 정보", example = "red")
+        private String color;
+
+        @Schema(description = "감정 정보", example = "joy")
+        private String emotion;
     }
 
     @AllArgsConstructor

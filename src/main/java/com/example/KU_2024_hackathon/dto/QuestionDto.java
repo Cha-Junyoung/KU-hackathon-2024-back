@@ -49,7 +49,7 @@ public class QuestionDto {
     public static class Response {
         @NotBlank(message = "[image_url] cannot be blank.")
         @Schema(description = "S3에 저장된 작품의 이미지 링크")
-        private String imageUrl;
+        private String image;
 
 
         @NotBlank(message = "[text] cannot be blank.")

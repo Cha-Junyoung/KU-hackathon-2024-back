@@ -3,21 +3,19 @@ package com.example.KU_2024_hackathon.service;
 import com.example.KU_2024_hackathon.dto.Emotions;
 import com.example.KU_2024_hackathon.dto.QuestionDto;
 import com.example.KU_2024_hackathon.entity.Profile;
-import com.example.KU_2024_hackathon.entity.Question;
 import com.example.KU_2024_hackathon.entity.Statistics;
 import com.example.KU_2024_hackathon.exception.CustomErrorCode;
 import com.example.KU_2024_hackathon.exception.CustomException;
 import com.example.KU_2024_hackathon.repository.QuestionRepository;
 import com.example.KU_2024_hackathon.repository.StatisticsRepository;
 import com.example.KU_2024_hackathon.security.CustomUserDetails;
+import java.util.List;
+import java.util.Random;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
-
-import java.util.List;
-import java.util.Random;
 
 @Service
 @RequiredArgsConstructor
@@ -53,7 +51,7 @@ public class QuestionService {
                 .answer_2(dto.getAnswer2())
                 .answer_3(dto.getAnswer3())
                 .text(response.getText())
-                .image_link(response.getImageUrl())
+                .image_link(response.getImage())
                 .emotion(Emotions.valueOf(response.getEmotion()))
                 .build();
 
@@ -63,8 +61,7 @@ public class QuestionService {
     }
 
     /* 랜덤 질문 생성 서비스 */
-    public QuestionDto.Questions getRandomQuestions()
-    {
+    public QuestionDto.Questions getRandomQuestions() {
         // 범주마다의 질문 리스트
         List<String> questionList1 = questionRepository.findByNumber(1);
         List<String> questionList2 = questionRepository.findByNumber(2);

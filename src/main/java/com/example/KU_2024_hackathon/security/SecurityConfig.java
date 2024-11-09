@@ -156,7 +156,7 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("http://localhost:3000")); // 허용할 출처 설정
+        configuration.setAllowedOrigins(List.of("http://localhost:3000", "https://2f37-163-152-3-134.ngrok-free.app")); // 허용할 출처 설정
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE"));
         configuration.setAllowedHeaders(List.of("*")); // 모든 헤더 허용
         configuration.setAllowCredentials(true); // 자격 증명 허용 (필요 시)

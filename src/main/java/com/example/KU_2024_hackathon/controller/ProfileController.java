@@ -39,57 +39,5 @@ public class ProfileController
                 .body("회원가입을 성공하였습니다.");
     }
 
-    /* 로그인하지 않아도 되는 요청 테스트 */
-    @GetMapping("/test-all")
-    @Operation(summary = "로그인하지 않아도 되는 요청 테스트")
-    @Parameters(value = {
-            @Parameter(name = "message", description = "메시지"),
-    })
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "테스트 성공 (요청 메시지를 그대로 반환)", content = @Content(schema = @Schema(implementation = String.class))),
-    })
-    public ResponseEntity<String> testAll(@RequestParam("message") String message)
-    {
-        return ResponseEntity.status(HttpStatus.OK)
-                .body(message);
-    }
 
-    /* front-back connection test */
-    @GetMapping("/test-connection")
-    public String Test(){
-        return "connection test";
-    }
-
-    /* 로그인해야 되는 요청 테스트 */
-    @GetMapping("/test-user")
-    @Operation(summary = "로그인해야 되는 요청 테스트")
-    @Parameters(value = {
-            @Parameter(name = "message", description = "메시지"),
-    })
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "테스트 성공 (요청 메시지를 그대로 반환)", content = @Content(schema = @Schema(implementation = String.class))),
-            @ApiResponse(responseCode = "실패: 401 (UNAUTHORIZED_REQUEST)", description = "로그인하지 않은 경우", content = @Content(schema = @Schema(implementation = ErrorDto.class))),
-    })
-    public ResponseEntity<String> testUser(@RequestParam("message") String message)
-    {
-        return ResponseEntity.status(HttpStatus.OK)
-                .body(message);
-    }
-
-    /* 관리자 계정으로 로그인해야 되는 요청 테스트 */
-    @GetMapping("/test-admin")
-    @Operation(summary = "관리자 계정으로 로그인해야 되는 요청 테스트")
-    @Parameters(value = {
-            @Parameter(name = "message", description = "메시지"),
-    })
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "테스트 성공 (요청 메시지를 그대로 반환)", content = @Content(schema = @Schema(implementation = String.class))),
-            @ApiResponse(responseCode = "실패: 401 (UNAUTHORIZED_REQUEST)", description = "로그인하지 않은 경우", content = @Content(schema = @Schema(implementation = ErrorDto.class))),
-            @ApiResponse(responseCode = "실패: 401 (LOW_AUTHORITY_REQUEST)", description = "로그인했지만, 권한이 부족한 경우", content = @Content(schema = @Schema(implementation = ErrorDto.class))),
-    })
-    public ResponseEntity<String> testAdmin(@RequestParam("message") String message)
-    {
-        return ResponseEntity.status(HttpStatus.OK)
-                .body(message);
-    }
 }

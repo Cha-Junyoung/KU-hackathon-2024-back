@@ -1,6 +1,7 @@
 package com.example.KU_2024_hackathon.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
@@ -21,6 +22,7 @@ public class ProfileDto
         private Long id;
 
         @NotBlank(message = "[email] cannot be blank.")
+        @Email(message = "[email] should be email format.")
         @Schema(description = "이메일")
         private String email;
 
@@ -49,6 +51,7 @@ public class ProfileDto
     public static class Join
     {
         @NotBlank(message = "[email] cannot be blank.")
+        @Email(message = "[email] should be email format.")
         @Schema(description = "이메일")
         private String email;
 

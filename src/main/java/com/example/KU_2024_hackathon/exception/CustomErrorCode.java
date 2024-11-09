@@ -8,7 +8,7 @@ import org.springframework.http.HttpStatus;
 @Getter
 public enum CustomErrorCode
 {
-    ALREADY_USED_ID(HttpStatus.BAD_REQUEST, "이미 사용 중인 아이디입니다.");
+    ALREADY_USED_ID(HttpStatus.BAD_REQUEST, "이미 사용 중인 이메일입니다.");
 
     private final HttpStatus httpStatus;
     private final String message;

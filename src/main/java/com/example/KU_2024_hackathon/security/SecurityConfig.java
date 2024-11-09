@@ -35,10 +35,10 @@ public class SecurityConfig
                         .requestMatchers("/api/logout").hasAnyRole("ADMIN", "USER")
                         // 프로필
                         .requestMatchers("/api/profile/join").permitAll()
-                        .requestMatchers("/api/profile/test-all").permitAll()
-                        .requestMatchers("/api/profile/test-connection").permitAll()
-                        .requestMatchers("/api/profile/test-user").hasAnyRole("ADMIN", "USER")
-                        .requestMatchers("/api/profile/test-admin").hasRole("ADMIN")
+                        // 테스트
+                        .requestMatchers("/api/test/test-all").permitAll()
+                        .requestMatchers("/api/test/test-user").hasAnyRole("ADMIN", "USER")
+                        .requestMatchers("/api/test/test-admin").hasRole("ADMIN")
                         // ADMIN
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
                         // 기타

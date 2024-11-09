@@ -1,5 +1,6 @@
 package com.example.KU_2024_hackathon.dto;
 
+import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -30,7 +31,7 @@ public class StatisticsDto {
     @Setter
     @Builder
     public static class GetColorsResponse {
-        @Schema(description = "특정 월의 색깔 리스트")
+        @ArraySchema(arraySchema = @Schema(description = "특정 월의 색깔 리스트", example = "[\"red\", \"blue\", \"green\"]"))
         private String[] colors;
     }
 

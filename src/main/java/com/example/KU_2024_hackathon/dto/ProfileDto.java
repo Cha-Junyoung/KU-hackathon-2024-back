@@ -35,10 +35,6 @@ public class ProfileDto
         @Schema(description = "닉네임")
         private String nickname;
 
-        @NotNull(message = "[created_at] cannot be null.")
-        @Schema(description = "생성 날짜")
-        private LocalDate created_at;
-
         @NotBlank(message = "[role] cannot be blank.")
         @Schema(description = "권한")
         private String role;

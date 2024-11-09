@@ -38,7 +38,7 @@ public class Statistics extends Common {
     private Profile profile;
 
     //    @Column(nullable = false) private LocalDateTime created_at;
-    @Column(nullable = false)
+    @Column(columnDefinition = "TEXT", nullable = false)
     private String text;
     @Column(nullable = false)
     private String image;

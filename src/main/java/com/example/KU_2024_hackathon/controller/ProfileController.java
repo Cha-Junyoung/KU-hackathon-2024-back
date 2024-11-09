@@ -43,6 +43,21 @@ public class ProfileController
                 .body("회원가입을 성공하였습니다.");
     }
 
+    /* 감정 색상 조회 컨트롤러 */
+    @GetMapping("/get-color")
+    @Operation(summary = "감정 색상 조회")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "감정 색상 조회 성공 (성공 메시지 반환)", content = @Content(schema = @Schema(implementation = ProfileDto.UpdateColor.class))),
+            @ApiResponse(responseCode = "실패: 404 (EMAIL_NOT_FOUND)", description = "요청자의 쿠키에 대한 이메일로 만들어진 계정이 존재하지 않는 경우 (이메일을 반환)", content = @Content(schema = @Schema(implementation = ErrorDto.class))),
+    })
+    public ResponseEntity<ProfileDto.UpdateColor> getColor(Principal principal)
+    {
+        ProfileDto.UpdateColor data = profileService.getColor(principal);
+
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(data);
+    }
+
     /* 감정 색상 수정 컨트롤러 */
     @PostMapping("/update-color")
     @Operation(summary = "감정 색상 수정")

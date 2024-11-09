@@ -43,6 +43,29 @@ public class ProfileService
         profileRepository.save(profile);
     }
 
+    /* 감정 색상 조회 서비스 */
+    @Transactional
+    public ProfileDto.UpdateColor getColor(Principal principal)
+    {
+        // 로그인 여부 확인 요청을 보낸 사용자의 계정 이메일
+        String email = principal.getName();
+
+        // 해당 사용자의 계정이 존재하는지 확인
+        Profile profile = profileRepository.findByEmail(email)
+                .orElseThrow(() -> new CustomException(CustomErrorCode.EMAIL_NOT_FOUND, email));
+
+        return ProfileDto.UpdateColor.builder()
+                .joy(profile.getJoy())
+                .angry(profile.getAngry())
+                .sad(profile.getSad())
+                .afraid(profile.getAfraid())
+                .surprise(profile.getSurprise())
+                .admiration(profile.getAdmiration())
+                .interest(profile.getInterest())
+                .boring(profile.getBoring())
+                .build();
+    }
+
     /* 감정 색상 수정 서비스 */
     @Transactional
     public void updateColor(Principal principal, ProfileDto.UpdateColor dto)
@@ -81,4 +104,5 @@ public class ProfileService
         // 데이터베이스 반영
         profileRepository.save(profile);
     }
+
 }

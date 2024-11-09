@@ -65,7 +65,7 @@ public class StatisticsDto {
     @Builder
     public static class GetStatisticsResponse {
         @Schema(description = "이미지 링크")
-        private String imageUrl;
+        private String image;
 
         @Schema(description = "텍스트")
         private String text;

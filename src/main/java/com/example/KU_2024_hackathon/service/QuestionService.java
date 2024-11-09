@@ -44,7 +44,7 @@ public class QuestionService {
         Profile profile = customUserDetails.getProfile();
 
         log.info(profile.toString());
-        
+
         // 결과 저장
         Statistics statistics = Statistics.builder()
                 .question_1(questionRepository.findByQuestion(dto.getQuestion1()).getNumber())
@@ -55,7 +55,7 @@ public class QuestionService {
                 .answer_2(dto.getAnswer2())
                 .answer_3(dto.getAnswer3())
                 .text(response.getText())
-                .image_link(response.getImage())
+                .image(response.getImage())
                 .emotion(Emotions.valueOf(response.getEmotion()))
                 .build();
 

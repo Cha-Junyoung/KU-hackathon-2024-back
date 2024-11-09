@@ -10,11 +10,10 @@ import com.example.KU_2024_hackathon.exception.CustomErrorCode;
 import com.example.KU_2024_hackathon.exception.CustomException;
 import com.example.KU_2024_hackathon.repository.StatisticsRepository;
 import com.example.KU_2024_hackathon.security.CustomUserDetails;
-import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -33,7 +32,8 @@ public class StatisticsService {
         GetStatisticsInfoResponse[] result = new GetStatisticsInfoResponse[31];
 
         // 통계 정보 조회
-        List<Statistics> statistics = statisticsRepository.findByProfileAndYearAndMonth(profile.getId(), specificYear, specificMonth);
+        List<Statistics> statistics = statisticsRepository.findByProfileAndYearAndMonth(profile.getId(), specificYear,
+                specificMonth);
 
         // 통계 정보가 없으면 예외 처리
         if (statistics.isEmpty()) {
@@ -94,8 +94,16 @@ public class StatisticsService {
         int specificMonth = Integer.parseInt(month);
         int specificDay = Integer.parseInt(day);
 
-        return statisticsRepository.findStatisticsByUserIdAndYearAndMonthAndDay(profile.getId(), specificYear,
+        Optional<Statistics> statisticsByUserIdAndYearAndMonthAndDay = statisticsRepository.findStatisticsByUserIdAndYearAndMonthAndDay(
+                profile.getId(), specificYear,
                 specificMonth,
                 specificDay);
+        if (statisticsByUserIdAndYearAndMonthAndDay.isEmpty()) {
+            throw new CustomException(CustomErrorCode.STATISTICS_NOT_FOUND, null);
+        }
+        return StatisticsDto.GetStatisticsResponse.builder().
+                image(statisticsByUserIdAndYearAndMonthAndDay.get().getImage()).
+                text(statisticsByUserIdAndYearAndMonthAndDay.get().getText()).
+                build();
     }
 }

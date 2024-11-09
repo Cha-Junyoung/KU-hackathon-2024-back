@@ -41,7 +41,7 @@ public class Statistics extends Common {
     @Column(nullable = false)
     private String text;
     @Column(nullable = false)
-    private String image_link;
+    private String image;
     @Column(nullable = false)
     private int question_1;
     @Column(nullable = false)

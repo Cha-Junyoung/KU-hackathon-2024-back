@@ -29,10 +29,7 @@ public class SecurityConfig {
         httpSecurity
                 .httpBasic(HttpBasicConfigurer::disable)    // HTTP 기본 인증 비활성화
                 .csrf(CsrfConfigurer::disable)              // CSRF 보호 비활성화
-                .cors(cors -> cors.configurationSource(corsConfigurationSource())) // CORS 설정 추가
-                .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/**").permitAll() // 모든 요청 허용
-                );
+                .cors(cors -> cors.configurationSource(corsConfigurationSource())); // CORS 설정 추가
 
         // 경로별 권한 설정
         httpSecurity
@@ -76,15 +73,11 @@ public class SecurityConfig {
                         .failureHandler(customLoginFailureHandler())    // 로그인 실패 로직
                 )
                 .logout((logout) -> logout
-                        .logoutUrl("/api/logout")               // 로그아웃 처리 경로
-                        .addLogoutHandler((request, response, authentication) -> {
-                            HttpSession session = request.getSession();
-                            if (session != null) {
-                                session.invalidate();
-                            }
-                        })
+                        .logoutUrl("/api/logout")       // 로그아웃 처리 경로
+                        .invalidateHttpSession(true)    // 세션 무효화 설정
+                        .clearAuthentication(true)      // 인증 정보 제거
                         .logoutSuccessHandler(customLogoutSuccessHandler())
-                        .deleteCookies("remember-me")
+                        .deleteCookies("remember-me", "JSESSIONID")     // 쿠키 삭제
                 )
                 .userDetailsService(customUserDetailsService);
 

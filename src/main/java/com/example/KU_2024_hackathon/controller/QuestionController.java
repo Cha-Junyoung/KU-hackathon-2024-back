@@ -1,5 +1,6 @@
 package com.example.KU_2024_hackathon.controller;
 
+import com.example.KU_2024_hackathon.dto.ErrorDto;
 import com.example.KU_2024_hackathon.dto.QuestionDto;
 import com.example.KU_2024_hackathon.security.CustomUserDetails;
 import com.example.KU_2024_hackathon.service.QuestionService;
@@ -14,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,4 +41,17 @@ public class QuestionController {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(questionService.submitAnswer(customUserDetails, request));
     }
+
+    /* 랜덤 질문 생성 컨트롤러 */
+    @GetMapping("/get-random-questions")
+    @Operation(summary = "랜덤 질문 생성")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "랜덤 질문 생성 성공", content = @Content(schema = @Schema(implementation = String.class))),
+            @ApiResponse(responseCode = "실패: 404 (QUESTION_NOT_FOUND)", description = "어떤 범주에 대한 질문이 존재하지 않는 경우", content = @Content(schema = @Schema(implementation = ErrorDto.class))),
+    })
+    public ResponseEntity<QuestionDto.Questions> getRandomQuestions() {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(questionService.getRandomQuestions());
+    }
+
 }

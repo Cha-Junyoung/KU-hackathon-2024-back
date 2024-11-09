@@ -32,7 +32,7 @@ public class StatisticsDto {
     @Setter
     @Builder
     public static class GetColorsResponse {
-        @ArraySchema(arraySchema = @Schema(description = "특정 월의 날짜, 색깔, 감정 정보", example = "[\"red\", \"blue\", \"green\"]"))
+        @ArraySchema(schema = @Schema(implementation = GetStatisticsInfoResponse.class, description = "특정 월의 날짜, 색깔, 감정 정보"))
         private GetStatisticsInfoResponse[] colors;
     }
 

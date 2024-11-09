@@ -11,20 +11,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 public class StatisticsDto {
-    @AllArgsConstructor
-    @NoArgsConstructor
-    @Getter
-    @Setter
-    @Builder
-    public static class GetColorsRequest {
-        @NotBlank(message = "[year] cannot be blank.")
-        @Schema(description = "연도")
-        private String year;
-
-        @NotBlank(message = "[month] cannot be blank.")
-        @Schema(description = "월")
-        private String month;
-    }
 
     @AllArgsConstructor
     @NoArgsConstructor

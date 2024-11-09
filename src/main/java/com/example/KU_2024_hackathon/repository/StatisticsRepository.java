@@ -21,15 +21,15 @@ public interface StatisticsRepository extends JpaRepository<Statistics, Long> {
             "    ELSE 'unknown' " +
             "END as color, " +
             "s.emotion " +
-            "FROM Statistics s " +
-            "JOIN Profile p ON s.profile.id = p.id " +
-            "WHERE s.profile.id = :id " +
+            "FROM statistics s " +
+            "JOIN profile p ON s.profile_id = p.id " +
+            "WHERE s.profile_id = :id " +
             "AND YEAR(s.created_at) = :year " +
             "AND MONTH(s.created_at) = :month", nativeQuery = true)
     List<Object[]> findEmotionsByUserIdAndYearAndMonth(@Param("id") Long id, @Param("year") int year,
                                                        @Param("month") int month);
 
     @Query(value = "SELECT s.image_url, s.text FROM Statistics s WHERE s.profile.id = :id AND YEAR(s.created_at) = :year AND MONTH(s.created_at) = :month AND DAY(s.created_at) = :day", nativeQuery = true)
-    GetStatisticsResponse findStatisticsByUserIdAndYearAndMonth(@Param("id") Long id, @Param("year") int year,
-                                                                @Param("month") int month, @Param("day") int day);
+    GetStatisticsResponse findStatisticsByUserIdAndYearAndMonthAndDay(@Param("id") Long id, @Param("year") int year,
+                                                                      @Param("month") int month, @Param("day") int day);
 }

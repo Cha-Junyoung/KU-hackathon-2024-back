@@ -18,14 +18,14 @@ public class StatisticsService {
     private final StatisticsRepository statisticsRepository;
 
     public List<GetColorsResponse> getColorsPerMonth(CustomUserDetails customUserDetails,
-                                                     StatisticsDto.GetColorsRequest request) {
+                                                     String year, String month) {
         Profile profile = customUserDetails.getProfile();
-        int year = Integer.parseInt(request.getYear());
-        int month = Integer.parseInt(request.getMonth());
+        int specificYear = Integer.parseInt(year);
+        int specificMonth = Integer.parseInt(month);
 
         List<Object[]> results = statisticsRepository.findEmotionsByUserIdAndYearAndMonth(
-                profile.getId(), year,
-                month);
+                profile.getId(), specificYear,
+                specificMonth);
 
         return results.stream()
                 .map(result -> GetStatisticsInfoResponse.builder()
@@ -42,12 +42,14 @@ public class StatisticsService {
     }
 
     public StatisticsDto.GetStatisticsResponse getStatisticsPerDay(CustomUserDetails customUserDetails,
-                                                                   StatisticsDto.GetStatisticsRequest request) {
+                                                                   String year, String month, String day) {
         Profile profile = customUserDetails.getProfile();
-        int year = Integer.parseInt(request.getYear());
-        int month = Integer.parseInt(request.getMonth());
-        int day = Integer.parseInt(request.getDay());
+        int specificYear = Integer.parseInt(year);
+        int specificMonth = Integer.parseInt(month);
+        int specificDay = Integer.parseInt(day);
 
-        return statisticsRepository.findStatisticsByUserIdAndYearAndMonth(profile.getId(), year, month, day);
+        return statisticsRepository.findStatisticsByUserIdAndYearAndMonthAndDay(profile.getId(), specificYear,
+                specificMonth,
+                specificDay);
     }
 }

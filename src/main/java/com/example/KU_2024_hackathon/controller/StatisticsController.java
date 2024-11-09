@@ -37,9 +37,11 @@ public class StatisticsController {
     })
     public ResponseEntity<StatisticsDto.GetStatisticsResponse> getStatisticsPerDay(
             @AuthenticationPrincipal CustomUserDetails customUserDetails,
-            @Valid @RequestParam StatisticsDto.GetStatisticsRequest request) {
+            @Valid @RequestParam String year,
+            @Valid @RequestParam String month,
+            @Valid @RequestParam String day) {
         return ResponseEntity.status(HttpStatus.OK).body(
-                statisticsService.getStatisticsPerDay(customUserDetails, request));
+                statisticsService.getStatisticsPerDay(customUserDetails, year, month, day));
     }
 
     @GetMapping()
@@ -49,9 +51,10 @@ public class StatisticsController {
     })
     public ResponseEntity<List<GetColorsResponse>> getColorsPerMonth(
             @AuthenticationPrincipal CustomUserDetails customUserDetails,
-            @Valid @RequestParam StatisticsDto.GetColorsRequest request) {
+            @Valid @RequestParam String year,
+            @Valid @RequestParam String month) {
 
         return ResponseEntity.status(HttpStatus.OK)
-                .body(statisticsService.getColorsPerMonth(customUserDetails, request));
+                .body(statisticsService.getColorsPerMonth(customUserDetails, year, month));
     }
 }

@@ -40,7 +40,7 @@ public class QuestionService {
 
         // 요청을 보낸 사용자 엔티티
         Profile profile = customUserDetails.getProfile();
-
+        
         // 결과 저장
         Statistics statistics = Statistics.builder()
                 .question_1(questionRepository.findByQuestion(dto.getQuestion1()).getNumber())

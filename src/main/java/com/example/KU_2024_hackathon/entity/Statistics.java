@@ -33,7 +33,7 @@ public class Statistics extends Common {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "profile", nullable = false)
+    @JoinColumn(name = "profile_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Profile profile;
 

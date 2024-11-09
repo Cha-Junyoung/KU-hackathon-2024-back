@@ -8,13 +8,29 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+// CORS 설정
+
 @Configuration
+@RequiredArgsConstructor
 public class WebConfig implements WebMvcConfigurer {
+
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**")
-                .allowedOriginPatterns("*") // “*“같은 와일드카드를 사용
-                .allowedMethods("GET", "POST") // 허용할 HTTP method
-                .allowCredentials(true); // 쿠키 인증 요청 허용
+        registry
+                .addMapping("/**")
+                .allowedHeaders("*")
+                .allowCredentials(true)
+                .allowedOrigins(
+                        "https://localhost:4000",
+                        "http://localhost:4000",
+                        "https://localhost:3000",
+                        "http://localhost:3000",
+                        "http://localhost",
+                        "https://localhost",
+                        "https://web-ku-hackathon-2024-front-m32mykqd6aabb332.sel4.cloudtype.app",
+                        "https://c969-163-152-3-141.ngrok-free.app"
+                )   // CORS 허용 도메인
+                .allowedMethods("GET", "POST", "PUT", "DELETE"); // CORS 허용 메서드
     }
+
 }

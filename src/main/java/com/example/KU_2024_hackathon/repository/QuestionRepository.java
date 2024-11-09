@@ -11,7 +11,8 @@ import java.util.Optional;
 public interface QuestionRepository extends JpaRepository<Question, Long>
 {
     // 질문으로 엔티티 찾기
-    Question findByQuestion(String question);
+    @Query(value = "SELECT * FROM question WHERE question = :question", nativeQuery = true)
+    Question findByQuestion(@Param("question") String question);
 
     // 해당 범주의 질문 리스트
     @Query(value = "SELECT question FROM question WHERE number = :number", nativeQuery = true)

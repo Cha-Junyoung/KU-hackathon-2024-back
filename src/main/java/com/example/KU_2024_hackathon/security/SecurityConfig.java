@@ -1,6 +1,9 @@
 package com.example.KU_2024_hackathon.security;
 
+import com.example.KU_2024_hackathon.repository.ProfileRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,6 +15,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.session.HttpSessionEventPublisher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -20,7 +24,12 @@ import java.util.Collections;
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfig {
+public class SecurityConfig
+{
+    @Autowired JwtUtil jwtUtil;
+    @Autowired ProfileRepository profileRepository;
+    @Autowired ObjectMapper objectMapper = new ObjectMapper();
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity,
                                                    CustomUserDetailsService customUserDetailsService) throws Exception {
@@ -61,6 +70,10 @@ public class SecurityConfig {
                         .accessDeniedHandler(customAccessDeniedHandler())
                 );
 
+        // UsernamePasswordAuthenticationFilter 앞에 JwtAuthFilter 추가
+        httpSecurity
+                .addFilterBefore(new JwtAuthFilter(customUserDetailsService, jwtUtil, profileRepository), UsernamePasswordAuthenticationFilter.class);
+
         // 로그인, 로그아웃 설정
         httpSecurity
                 .formLogin((login) -> login
@@ -73,31 +86,14 @@ public class SecurityConfig {
                 )
                 .logout((logout) -> logout
                         .logoutUrl("/api/logout")       // 로그아웃 처리 경로
-                        .invalidateHttpSession(true)    // 세션 무효화 설정
-                        .clearAuthentication(true)      // 인증 정보 제거
                         .logoutSuccessHandler(customLogoutSuccessHandler())
-                        .deleteCookies("remember-me", "JSESSIONID")     // 쿠키 삭제
                 )
                 .userDetailsService(customUserDetailsService);
 
-        // remember-me 설정
-        httpSecurity
-                .rememberMe((rememberConfig) -> rememberConfig
-                        .key("Test-Key")
-                        .tokenValiditySeconds(60 * 60 * 24 * 30)        // 30일
-                        .rememberMeParameter("remember-me")
-                        .userDetailsService(customUserDetailsService)
-                );
-
-        // 세션 설정
+        // 세션 생성 및 사용 정지
         httpSecurity
                 .sessionManagement((session) -> session
-                        .sessionFixation().changeSessionId()                            // 로그인 시, 기존 세션 무효화
-                        .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)       // 필요시에 세션을 생성
-                        .maximumSessions(1)                                             // 1명만 로그인 가능
-                        .maxSessionsPreventsLogin(false)                                // 다른 기기 로그인 시 기존 사용자 세션 만료
-                        .sessionRegistry(sessionRegistry())                             // 동시에 로그인한 세션들 추적
-                        .expiredSessionStrategy(customSessionExpiredStrategy())         // 만료된 세션으로 요청 시, 처리
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 );
 
         return httpSecurity.build();

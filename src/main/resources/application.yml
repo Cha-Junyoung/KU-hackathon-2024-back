@@ -6,11 +6,13 @@ spring:
     username: ${DB_name}
     password: ${DB_password}
   jpa:
-    properties:
-      hibernate:
-        jdbc:
-          time_zone: UTC
     database: mysql
     database-platform: org.hibernate.dialect.MySQLDialect
     hibernate:
       ddl-auto: update
+
+## JWT 설정
+jwt:
+  secret: ${JWT_SECRET}               # Base64
+  access_expiration_time: 3600        # Access token 만료 시간 : 60분
+  refresh_expiration_time: 2592000    # Refresh token 만료 시간 : 30일

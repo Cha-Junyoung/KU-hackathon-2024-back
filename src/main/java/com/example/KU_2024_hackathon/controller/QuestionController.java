@@ -2,6 +2,7 @@ package com.example.KU_2024_hackathon.controller;
 
 import com.example.KU_2024_hackathon.dto.ErrorDto;
 import com.example.KU_2024_hackathon.dto.QuestionDto;
+import com.example.KU_2024_hackathon.dto.QuestionDto.Response;
 import com.example.KU_2024_hackathon.security.CustomUserDetails;
 import com.example.KU_2024_hackathon.service.QuestionService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -33,7 +34,7 @@ public class QuestionController {
     @PostMapping()
     @Operation(summary = "질문 답변 제출")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "질문 답변 제출 성공", content = @Content(schema = @Schema(implementation = String.class))),
+            @ApiResponse(responseCode = "201", description = "질문 답변 제출 성공", content = @Content(schema = @Schema(implementation = Response.class))),
     })
     public ResponseEntity<QuestionDto.Response> submitAnswer(
             @AuthenticationPrincipal CustomUserDetails customUserDetails,

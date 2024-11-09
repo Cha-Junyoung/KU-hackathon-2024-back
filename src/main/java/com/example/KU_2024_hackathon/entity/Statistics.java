@@ -56,4 +56,8 @@ public class Statistics extends Common {
     private String answer_3;
     @Column(nullable = false)
     private Emotions emotion;
+
+    @Column(nullable = false)
+    @Builder.Default
+    private boolean is_public = false;
 }

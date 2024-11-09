@@ -37,28 +37,28 @@ public class Profile extends Common {
     private String role;
 
     @Column(nullable = false)
-    @ColumnDefault("'fccf03'")
-    private String joy;
+    @Builder.Default
+    private String joy = "fccf03";
     @Column(nullable = false)
-    @ColumnDefault("'fc0303'")
-    private String angry;
+    @Builder.Default
+    private String angry = "fc0303";
     @Column(nullable = false)
-    @ColumnDefault("'0330fc'")
-    private String sad;
+    @Builder.Default
+    private String sad = "0330fc";
     @Column(nullable = false)
-    @ColumnDefault("'035711'")
-    private String afraid;
+    @Builder.Default
+    private String afraid = "035711";
     @Column(nullable = false)
-    @ColumnDefault("'6df754'")
-    private String admiration;
+    @Builder.Default
+    private String admiration = "6df754";
     @Column(nullable = false)
-    @ColumnDefault("'57a8e6'")
-    private String surprise;
+    @Builder.Default
+    private String surprise = "57a8e6";
     @Column(nullable = false)
-    @ColumnDefault("'ffa114'")
-    private String interest;
+    @Builder.Default
+    private String interest = "ffa114";
     @Column(nullable = false)
-    @ColumnDefault("'b649ba'")
-    private String boring;
+    @Builder.Default
+    private String boring = "b649ba";
 
 }

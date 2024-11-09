@@ -6,16 +6,20 @@ import com.example.KU_2024_hackathon.exception.CustomErrorCode;
 import com.example.KU_2024_hackathon.exception.CustomException;
 import com.example.KU_2024_hackathon.repository.ProfileRepository;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
+import java.time.LocalDateTime;
+
 @Service
-public class ProfileService {
-    @Autowired
-    ProfileRepository profileRepository;
-    @Autowired
-    BCryptPasswordEncoder encoder;
+@RequiredArgsConstructor
+public class ProfileService
+{
+    private final ProfileRepository profileRepository;
+    private final BCryptPasswordEncoder encoder;
 
     /* 회원가입 서비스 */
     @Transactional
@@ -23,7 +27,7 @@ public class ProfileService {
         // 해당 아이디로 생성된 계정이 이미 존재한다면 예외 처리
         profileRepository.findByEmail(dto.getEmail())
                 .ifPresent(user -> {
-                    throw new CustomException(CustomErrorCode.ALREADY_USED_ID, dto.getEmail());
+                    throw new CustomException(CustomErrorCode.ALREADY_USED_EMAIL, dto.getEmail());
                 });
 
         // Profile 엔티티 생성

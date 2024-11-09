@@ -12,24 +12,28 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
+
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/profile")
 @Tag(name = "프로필", description = "사용자 정보 관련 api입니다.")
 public class ProfileController
 {
-    @Autowired ProfileService profileService;
+    private final ProfileService profileService;
 
     /* 회원가입 컨트롤러 */
     @PostMapping("/join")
     @Operation(summary = "회원가입")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "회원가입 성공 (성공 메시지 반환)", content = @Content(schema = @Schema(implementation = String.class))),
-            @ApiResponse(responseCode = "실패: 400 (ALREADY_USED_ID)", description = "해당 아이디로 생성된 계정이 이미 존재하는 경우 (입력받은 아이디를 반환)", content = @Content(schema = @Schema(implementation = ErrorDto.class))),
+            @ApiResponse(responseCode = "실패: 400 (ALREADY_USED_EMAIL)", description = "해당 아이디로 생성된 계정이 이미 존재하는 경우 (입력받은 아이디를 반환)", content = @Content(schema = @Schema(implementation = ErrorDto.class))),
     })
     public ResponseEntity<String> join(@Valid @RequestBody ProfileDto.Join dto)
     {
@@ -39,57 +43,20 @@ public class ProfileController
                 .body("회원가입을 성공하였습니다.");
     }
 
-    /* 로그인하지 않아도 되는 요청 테스트 */
-    @GetMapping("/test-all")
-    @Operation(summary = "로그인하지 않아도 되는 요청 테스트")
-    @Parameters(value = {
-            @Parameter(name = "message", description = "메시지"),
-    })
+    /* 감정 색상 수정 컨트롤러
+    @PostMapping("/update-color")
+    @Operation(summary = "감정 색상 수정")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "테스트 성공 (요청 메시지를 그대로 반환)", content = @Content(schema = @Schema(implementation = String.class))),
+            @ApiResponse(responseCode = "200", description = "감정 색상 수정 성공 (성공 메시지 반환)", content = @Content(schema = @Schema(implementation = String.class))),
+            @ApiResponse(responseCode = "실패: 404 (EMAIL_NOT_FOUND)", description = "요청자의 쿠키에 대한 이메일로 만들어진 계정이 존재하지 않는 경우 (이메일을 반환)", content = @Content(schema = @Schema(implementation = ErrorDto.class))),
     })
-    public ResponseEntity<String> testAll(@RequestParam("message") String message)
+    public ResponseEntity<String> updateColor(Principal principal, @Valid @RequestBody ProfileDto.UpdateColor dto)
     {
+        profileService.updateColor(principal, dto);
+
         return ResponseEntity.status(HttpStatus.OK)
-                .body(message);
+                .body("감정 색상 수정을 성공하였습니다.");
     }
 
-    /* front-back connection test */
-    @GetMapping("/test-connection")
-    public String Test(){
-        return "connection test";
-    }
-
-    /* 로그인해야 되는 요청 테스트 */
-    @GetMapping("/test-user")
-    @Operation(summary = "로그인해야 되는 요청 테스트")
-    @Parameters(value = {
-            @Parameter(name = "message", description = "메시지"),
-    })
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "테스트 성공 (요청 메시지를 그대로 반환)", content = @Content(schema = @Schema(implementation = String.class))),
-            @ApiResponse(responseCode = "실패: 401 (UNAUTHORIZED_REQUEST)", description = "로그인하지 않은 경우", content = @Content(schema = @Schema(implementation = ErrorDto.class))),
-    })
-    public ResponseEntity<String> testUser(@RequestParam("message") String message)
-    {
-        return ResponseEntity.status(HttpStatus.OK)
-                .body(message);
-    }
-
-    /* 관리자 계정으로 로그인해야 되는 요청 테스트 */
-    @GetMapping("/test-admin")
-    @Operation(summary = "관리자 계정으로 로그인해야 되는 요청 테스트")
-    @Parameters(value = {
-            @Parameter(name = "message", description = "메시지"),
-    })
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "테스트 성공 (요청 메시지를 그대로 반환)", content = @Content(schema = @Schema(implementation = String.class))),
-            @ApiResponse(responseCode = "실패: 401 (UNAUTHORIZED_REQUEST)", description = "로그인하지 않은 경우", content = @Content(schema = @Schema(implementation = ErrorDto.class))),
-            @ApiResponse(responseCode = "실패: 401 (LOW_AUTHORITY_REQUEST)", description = "로그인했지만, 권한이 부족한 경우", content = @Content(schema = @Schema(implementation = ErrorDto.class))),
-    })
-    public ResponseEntity<String> testAdmin(@RequestParam("message") String message)
-    {
-        return ResponseEntity.status(HttpStatus.OK)
-                .body(message);
-    }
+     */
 }

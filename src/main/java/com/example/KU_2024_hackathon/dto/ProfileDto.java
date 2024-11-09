@@ -1,6 +1,8 @@
 package com.example.KU_2024_hackathon.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.persistence.Column;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
@@ -21,6 +23,7 @@ public class ProfileDto
         private Long id;
 
         @NotBlank(message = "[email] cannot be blank.")
+        @Email(message = "[email] should be email format.")
         @Schema(description = "이메일")
         private String email;
 
@@ -49,6 +52,7 @@ public class ProfileDto
     public static class Join
     {
         @NotBlank(message = "[email] cannot be blank.")
+        @Email(message = "[email] should be email format.")
         @Schema(description = "이메일")
         private String email;
 
@@ -59,5 +63,38 @@ public class ProfileDto
         @NotBlank(message = "[nickname] cannot be blank.")
         @Schema(description = "닉네임")
         private String nickname;
+    }
+
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Getter
+    @Setter
+    @Builder
+    public static class UpdateColor
+    {
+        @NotBlank(message = "[joy] cannot be blank.")
+        @Schema(description = "기쁨")
+        private String joy;
+        @NotBlank(message = "[angry] cannot be blank.")
+        @Schema(description = "화남")
+        private String angry;
+        @NotBlank(message = "[angry] cannot be blank.")
+        @Schema(description = "슬픔")
+        private String sad;
+        @NotBlank(message = "[angry] cannot be blank.")
+        @Schema(description = "두려움")
+        private String afraid;
+        @NotBlank(message = "[admiration] cannot be blank.")
+        @Schema(description = "감탄")
+        private String admiration;
+        @NotBlank(message = "[surprise] cannot be blank.")
+        @Schema(description = "놀람")
+        private String surprise;
+        @NotBlank(message = "[interest] cannot be blank.")
+        @Schema(description = "호기심")
+        private String interest;
+        @NotBlank(message = "[boring] cannot be blank.")
+        @Schema(description = "따분함")
+        private String boring;
     }
 }

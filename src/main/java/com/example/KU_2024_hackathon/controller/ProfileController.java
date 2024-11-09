@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/profile")
-@CrossOrigin(origins = "https://web-test-front-m32mykqd6aabb332.sel4.cloudtype.app")
 @Tag(name = "프로필", description = "사용자 정보 관련 api입니다.")
 public class ProfileController
 {

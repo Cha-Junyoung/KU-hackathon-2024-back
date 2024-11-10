@@ -1,5 +1,6 @@
 <h2> 프로젝트 폴더 구조 </h2>
 
+```
 ├── Ku2024HackathonApplication.java  
 ├── configuration  
 │   ├── SwaggerConfig.java  
@@ -52,6 +53,7 @@
 └── tree.txt  
 
 9 directories, 42 files
+```
 
 <h2> API 명세 </h2>
 <img width="1409" alt="image" src="https://github.com/user-attachments/assets/bdd37fbd-b034-437b-9439-2c45042c2519">
